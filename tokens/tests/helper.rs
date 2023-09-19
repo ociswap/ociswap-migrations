@@ -9,7 +9,6 @@ pub struct EnvDefault {
     pub new_token: Bucket,
     pub old_address: ResourceAddress,
     pub new_address: ResourceAddress,
-    pub owner_badge: Bucket,
     pub token_swap: TokenSwap,
 }
 
@@ -20,13 +19,10 @@ impl EnvDefault {
 
         let old_token = ResourceBuilder::new_fungible(OwnerRole::None)
             .divisibility(18)
-            .mint_initial_supply(2000, &mut env)?;
+            .mint_initial_supply(1000, &mut env)?;
         let new_token = ResourceBuilder::new_fungible(OwnerRole::None)
             .divisibility(18)
             .mint_initial_supply(2000, &mut env)?;
-        let owner_badge = ResourceBuilder::new_fungible(OwnerRole::None)
-            .divisibility(1)
-            .mint_initial_supply(1, &mut env)?;
 
         let new_address = new_token.resource_address(&mut env)?;
         let old_address = old_token.resource_address(&mut env)?;
@@ -34,7 +30,6 @@ impl EnvDefault {
         let token_swap = TokenSwap::instantiate(
             new_token.take(dec!(1000), &mut env)?,
             old_address,
-            None,
             package_address,
             &mut env
         )?;
@@ -45,7 +40,6 @@ impl EnvDefault {
             new_address,
             old_token: old_token,
             new_token: new_token,
-            owner_badge,
             token_swap,
         })
     }
