@@ -1,5 +1,5 @@
 use pretty_assertions::assert_eq;
-use token_swap::test_bindings::*;
+use token_migration::test_bindings::*;
 use scrypto::*;
 use scrypto_test::prelude::*;
 

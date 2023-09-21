@@ -1,5 +1,5 @@
 [package]
-name = "token-swap"
+name = "token-migration"
 version = "0.1.0"
 edition = "2021"
 resolver = "2"
@@ -13,7 +13,7 @@ transaction = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "v0.
 radix-engine = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "v0.12.1" }
 scrypto-unit = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "v0.12.1" }
 scrypto-test = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "v0.12.1" }
-token-swap = { path = ".", features = ["test"] }
+token-migration = { path = ".", features = ["test"] }
 pretty_assertions = "1.4.0"
 
 [profile.release]

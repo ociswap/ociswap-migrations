@@ -1,7 +1,7 @@
 use scrypto::prelude::*;
 
 #[blueprint]
-mod token_swap {
+mod token_migration {
     struct TokenMigration {
         new_token: Vault,
         old_token: Vault,
