@@ -27,9 +27,9 @@ mod token_migration {
         }
 
         pub fn swap(&mut self, old_token: Bucket) -> Bucket {
-            let new_token = self.new_token.take(old_token.amount());
+            let old_amount = old_token.amount();
             self.old_token.put(old_token);
-            new_token
+            self.new_token.take(old_amount)
         }
     }
 }
