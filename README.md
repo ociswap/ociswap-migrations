@@ -16,7 +16,7 @@ If you have a mutable old token you should not mint or burn any of the old token
 To migrate and swap your old tokens to the new ones you can simply send a bucket of old tokens to the `swap` method on the instantiated `TokenMigration` component.
 
 ```rust
-pub fn swap(old_token: Bucket) -> Bucket {
+pub fn swap(old_token: Bucket) -> Bucket
 ```
 
 You get the new tokens returned then which you can deposit in your user's wallet in the transaction manifest.
