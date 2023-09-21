@@ -8,48 +8,58 @@ mod token_swap {
     use helper::*;
 
     #[test]
-    #[ignore = "TODO"]
-    fn test_instantiate_same_address() -> Result<(), RuntimeError> {
-        Ok(())
-    }
-
-    #[test]
-    #[ignore = "TODO"]
-    fn test_instantiate_not_enough_supply() -> Result<(), RuntimeError> {
-        Ok(())
-    }
-
-    #[test]
-    fn test_token_swap() -> Result<(), RuntimeError> {
-        let mut env = EnvDefault::new()?;
-        let old_token = env.old_token.take(dec!(10), &mut env.env)?;
-        let output = env.token_swap.swap(old_token, &mut env.env)?;
-
-        env.assert_bucket_eq(&output, env.new_address, dec!(10))?;
-
-        Ok(())
+    #[should_panic]
+    fn test_instantiate_same_address() {
+        let mut helper = MigrationHelper::new().unwrap();
+        let new_token = helper.y_token.take(dec!(1), &mut helper.env).unwrap();
+        helper.instantiate(helper.y_address, new_token).unwrap();
     }
 
     #[test]
     #[should_panic]
-    fn test_token_swap_too_much() {
-        let mut env = EnvDefault::new().unwrap();
-        let old_token = env.old_token.take(dec!(1001), &mut env.env).unwrap();
-        let _ = env.token_swap.swap(old_token, &mut env.env);
+    fn test_instantiate_new_amount_smaller_old_supply() {
+        let mut helper = MigrationHelper::new().unwrap();
+        let new_token = helper.y_token.take(dec!(999), &mut helper.env).unwrap();
+        helper.instantiate(helper.x_address, new_token).unwrap()
     }
 
     #[test]
-    fn test_token_swap_multiple() -> Result<(), RuntimeError> {
-        let mut env = EnvDefault::new()?;
-        let old_token = env.old_token.take(dec!(10), &mut env.env)?;
-        let output = env.token_swap.swap(old_token, &mut env.env)?;
+    fn test_swap() -> Result<(), RuntimeError> {
+        let mut helper = MigrationHelper::new()?;
+        helper.instantiate_default()?;
+        let old_token = helper.x_token.take(dec!(10), &mut helper.env)?;
+        let output = helper.migration.unwrap().swap(old_token, &mut helper.env)?;
 
-        env.assert_bucket_eq(&output, env.new_address, dec!(10))?;
+        helper.assert_bucket_eq(&output, helper.y_address, dec!(10))?;
 
-        let old_token = env.old_token.take(dec!(10), &mut env.env)?;
-        let output = env.token_swap.swap(old_token, &mut env.env)?;
+        Ok(())
+    }
 
-        env.assert_bucket_eq(&output, env.new_address, dec!(10))?;
+    #[test]
+    fn test_swap_multiple() -> Result<(), RuntimeError> {
+        let mut helper = MigrationHelper::new()?;
+        helper.instantiate_default()?;
+        let old_token = helper.x_token.take(dec!(10), &mut helper.env)?;
+        let output = helper.migration.unwrap().swap(old_token, &mut helper.env)?;
+
+        helper.assert_bucket_eq(&output, helper.y_address, dec!(10))?;
+
+        let old_token = helper.x_token.take(dec!(10), &mut helper.env)?;
+        let output = helper.migration.unwrap().swap(old_token, &mut helper.env)?;
+
+        helper.assert_bucket_eq(&output, helper.y_address, dec!(10))?;
+
+        Ok(())
+    }
+
+    #[test]
+    fn test_swap_all() -> Result<(), RuntimeError> {
+        let mut helper = MigrationHelper::new()?;
+        helper.instantiate_default()?;
+        let old_token = helper.x_token.take(dec!(1000), &mut helper.env)?;
+        let output = helper.migration.unwrap().swap(old_token, &mut helper.env)?;
+
+        helper.assert_bucket_eq(&output, helper.y_address, dec!(1000))?;
 
         Ok(())
     }

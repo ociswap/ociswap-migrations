@@ -2,13 +2,14 @@ use scrypto::prelude::*;
 
 #[blueprint]
 mod token_swap {
-    struct TokenSwap {
+    struct TokenMigration {
         new_token: Vault,
         old_token: Vault,
     }
 
-    impl TokenSwap {
-        pub fn instantiate(new_token: Bucket, old_address: ResourceAddress) -> Global<TokenSwap> {
+    impl TokenMigration {
+        pub fn instantiate(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration> {
+            assert_ne!(new_token.resource_address(), old_address, "New and old token are not allowed to be equal.");
             if let Some(old_total_supply) = ResourceManager::from_address(old_address).total_supply() {
                 assert_eq!(
                     new_token.amount(),
@@ -16,7 +17,6 @@ mod token_swap {
                     "New token amount needs to be equal to the total supply of the old token."
                 );
             }
-            assert_ne!(new_token.resource_address(), old_address, "New and old token are not allowed to be equal.");
             (Self {
                 new_token: Vault::with_bucket(new_token),
                 old_token: Vault::new(old_address),

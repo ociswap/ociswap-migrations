@@ -3,45 +3,66 @@ use token_swap::test_bindings::*;
 use scrypto::*;
 use scrypto_test::prelude::*;
 
-pub struct EnvDefault {
+pub struct MigrationHelper {
     pub env: TestEnvironment,
-    pub old_token: Bucket,
-    pub new_token: Bucket,
-    pub old_address: ResourceAddress,
-    pub new_address: ResourceAddress,
-    pub token_swap: TokenSwap,
+    pub package_address: PackageAddress,
+    pub x_token: Bucket,
+    pub y_token: Bucket,
+    pub z_token: Bucket,
+    pub x_address: ResourceAddress,
+    pub y_address: ResourceAddress,
+    pub z_address: ResourceAddress,
+    pub migration: Option<TokenMigration>,
 }
 
-impl EnvDefault {
+impl MigrationHelper {
     pub fn new() -> Result<Self, RuntimeError> {
         let mut env = TestEnvironment::new();
         let package_address = Package::compile_and_publish(this_package!(), &mut env)?;
 
-        let old_token = ResourceBuilder::new_fungible(OwnerRole::None)
+        let x_token = ResourceBuilder::new_fungible(OwnerRole::None)
             .divisibility(18)
             .mint_initial_supply(1000, &mut env)?;
-        let new_token = ResourceBuilder::new_fungible(OwnerRole::None)
+        let y_token = ResourceBuilder::new_fungible(OwnerRole::None)
             .divisibility(18)
             .mint_initial_supply(2000, &mut env)?;
+        let z_token = ResourceBuilder::new_fungible(OwnerRole::None)
+            .divisibility(18)
+            .mint_initial_supply(3000, &mut env)?;
 
-        let new_address = new_token.resource_address(&mut env)?;
-        let old_address = old_token.resource_address(&mut env)?;
-
-        let token_swap = TokenSwap::instantiate(
-            new_token.take(dec!(1000), &mut env)?,
-            old_address,
-            package_address,
-            &mut env
-        )?;
+        let x_address = x_token.resource_address(&mut env)?;
+        let y_address = y_token.resource_address(&mut env)?;
+        let z_address = z_token.resource_address(&mut env)?;
 
         Ok(Self {
             env,
-            old_address,
-            new_address,
-            old_token: old_token,
-            new_token: new_token,
-            token_swap,
+            package_address,
+            x_token,
+            y_token,
+            z_token,
+            x_address,
+            y_address,
+            z_address,
+            migration: None,
         })
+    }
+
+    pub fn instantiate(&mut self, old_address: ResourceAddress, new_token: Bucket) -> Result<(), RuntimeError> {
+        self.migration = Some(TokenMigration::instantiate(
+            old_address,
+            new_token,
+            self.package_address,
+            &mut self.env
+        )?);
+
+        Ok(())
+    }
+
+    pub fn instantiate_default(&mut self) -> Result<(), RuntimeError> {
+        let new_token = self.y_token.take(dec!(1000), &mut self.env)?;
+        self.instantiate(self.x_address, new_token)?;
+
+        Ok(())
     }
 
     pub fn assert_bucket_eq(
