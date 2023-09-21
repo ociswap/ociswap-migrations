@@ -8,11 +8,10 @@ mod token_migration {
     use helper::*;
 
     #[test]
-    #[should_panic]
-    fn test_instantiate_same_address() {
+    fn test_instantiate() {
         let mut helper = MigrationHelper::new().unwrap();
-        let new_token = helper.y_token.take(dec!(1), &mut helper.env).unwrap();
-        helper.instantiate(helper.y_address, new_token).unwrap();
+        let new_token = helper.y_token.take(dec!(1000), &mut helper.env).unwrap();
+        helper.instantiate(helper.x_address, new_token).unwrap();
     }
 
     #[test]
