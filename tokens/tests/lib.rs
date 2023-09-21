@@ -28,7 +28,7 @@ mod token_migration {
         let mut helper = MigrationHelper::new()?;
         helper.instantiate_default()?;
         let old_token = helper.x_token.take(dec!(10), &mut helper.env)?;
-        let output = helper.migration.unwrap().swap(old_token, &mut helper.env)?;
+        let output = helper.token_migration.unwrap().swap(old_token, &mut helper.env)?;
 
         helper.assert_bucket_eq(&output, helper.y_address, dec!(10))?;
 
@@ -40,12 +40,12 @@ mod token_migration {
         let mut helper = MigrationHelper::new()?;
         helper.instantiate_default()?;
         let old_token = helper.x_token.take(dec!(10), &mut helper.env)?;
-        let output = helper.migration.unwrap().swap(old_token, &mut helper.env)?;
+        let output = helper.token_migration.unwrap().swap(old_token, &mut helper.env)?;
 
         helper.assert_bucket_eq(&output, helper.y_address, dec!(10))?;
 
         let old_token = helper.x_token.take(dec!(10), &mut helper.env)?;
-        let output = helper.migration.unwrap().swap(old_token, &mut helper.env)?;
+        let output = helper.token_migration.unwrap().swap(old_token, &mut helper.env)?;
 
         helper.assert_bucket_eq(&output, helper.y_address, dec!(10))?;
 
@@ -57,7 +57,7 @@ mod token_migration {
         let mut helper = MigrationHelper::new()?;
         helper.instantiate_default()?;
         let old_token = helper.x_token.take(dec!(1000), &mut helper.env)?;
-        let output = helper.migration.unwrap().swap(old_token, &mut helper.env)?;
+        let output = helper.token_migration.unwrap().swap(old_token, &mut helper.env)?;
 
         helper.assert_bucket_eq(&output, helper.y_address, dec!(1000))?;
 
