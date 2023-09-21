@@ -23,6 +23,14 @@ mod token_migration {
     }
 
     #[test]
+    #[should_panic]
+    fn test_instantiate_new_amount_larger_old_supply() {
+        let mut helper = MigrationHelper::new().unwrap();
+        let new_token = helper.y_token.take(dec!(1001), &mut helper.env).unwrap();
+        helper.instantiate(helper.x_address, new_token).unwrap()
+    }
+
+    #[test]
     fn test_swap() -> Result<(), RuntimeError> {
         let mut helper = MigrationHelper::new()?;
         helper.instantiate_default()?;
