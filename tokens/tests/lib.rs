@@ -1,7 +1,7 @@
 mod helper;
 
 #[cfg(test)]
-mod token_swap {
+mod token_migration {
     use scrypto::*;
     use scrypto_test::prelude::*;
     use super::*;
