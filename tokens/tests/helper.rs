@@ -12,7 +12,7 @@ pub struct MigrationHelper {
     pub x_address: ResourceAddress,
     pub y_address: ResourceAddress,
     pub z_address: ResourceAddress,
-    pub migration: Option<TokenMigration>,
+    pub token_migration: Option<TokenMigration>,
 }
 
 impl MigrationHelper {
@@ -43,17 +43,23 @@ impl MigrationHelper {
             x_address,
             y_address,
             z_address,
-            migration: None,
+            token_migration: None,
         })
     }
 
-    pub fn instantiate(&mut self, old_address: ResourceAddress, new_token: Bucket) -> Result<(), RuntimeError> {
-        self.migration = Some(TokenMigration::instantiate(
-            old_address,
-            new_token,
-            self.package_address,
-            &mut self.env
-        )?);
+    pub fn instantiate(
+        &mut self,
+        old_address: ResourceAddress,
+        new_token: Bucket
+    ) -> Result<(), RuntimeError> {
+        self.token_migration = Some(
+            TokenMigration::instantiate(
+                old_address,
+                new_token,
+                self.package_address,
+                &mut self.env
+            )?
+        );
 
         Ok(())
     }
