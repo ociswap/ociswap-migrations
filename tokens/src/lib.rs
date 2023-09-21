@@ -9,7 +9,7 @@ mod token_migration {
 
     impl TokenMigration {
         pub fn instantiate(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration> {
-            assert_ne!(new_token.resource_address(), old_address, "New and old token are not allowed to be equal.");
+            assert_ne!(old_address, new_token.resource_address(), "New and old token are not allowed to be equal.");
             if let Some(old_total_supply) = ResourceManager::from_address(old_address).total_supply() {
                 assert_eq!(
                     new_token.amount(),
