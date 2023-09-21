@@ -3,7 +3,7 @@
 This [TokenMigration](token_migration/src/lib.rs) blueprint aims to transition tokens from Olympia to Babylon, leveraging all the advanced resource capabilities of the Radix Babylon Engine.
 
 ## Instantiation
-To use it you need to create your own new token first (preferrable with the same total supply than your old token) and then call the `instantiate` function on the blueprint passing the `old_address` (Babylon address of your old token) and `new_token` (full new total supply):
+To use it you need to create your own new token first (preferrable with the same total supply than your old token) and then call the `instantiate` function on the blueprint passing the `old_address` (Babylon address of your old token - every Olympia token will have a new address on Bablyon) and `new_token` (full new total supply):
 
 ```rust
 pub fn instantiate(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration>
