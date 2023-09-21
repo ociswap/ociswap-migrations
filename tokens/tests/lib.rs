@@ -16,7 +16,7 @@ mod token_migration {
 
     #[test]
     #[should_panic]
-    fn test_instantiate_new_amount_smaller_old_supply() {
+    fn test_instantiate_new_amount_lesser_old_supply() {
         let mut helper = MigrationHelper::new().unwrap();
         let new_token = helper.y_token.take(dec!(999), &mut helper.env).unwrap();
         helper.instantiate(helper.x_address, new_token).unwrap()
@@ -24,7 +24,7 @@ mod token_migration {
 
     #[test]
     #[should_panic]
-    fn test_instantiate_new_amount_larger_old_supply() {
+    fn test_instantiate_new_amount_greater_old_supply() {
         let mut helper = MigrationHelper::new().unwrap();
         let new_token = helper.y_token.take(dec!(1001), &mut helper.env).unwrap();
         helper.instantiate(helper.x_address, new_token).unwrap()
