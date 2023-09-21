@@ -70,4 +70,22 @@ mod token_migration {
 
         Ok(())
     }
+
+    #[test]
+    #[should_panic]
+    fn test_swap_with_new_token() {
+        let mut helper = MigrationHelper::new().unwrap();
+        helper.instantiate_default().unwrap();
+        let new_token = helper.y_token.take(dec!(10), &mut helper.env).unwrap();
+        let _ = helper.token_migration.unwrap().swap(new_token, &mut helper.env).unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_swap_with_other_token() {
+        let mut helper = MigrationHelper::new().unwrap();
+        helper.instantiate_default().unwrap();
+        let other_token = helper.z_token.take(dec!(10), &mut helper.env).unwrap();
+        let _ = helper.token_migration.unwrap().swap(other_token, &mut helper.env).unwrap();
+    }
 }
