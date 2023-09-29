@@ -64,6 +64,23 @@ impl MigrationHelper {
         Ok(())
     }
 
+    pub fn instantiate_without_supply_validation(
+        &mut self,
+        old_address: ResourceAddress,
+        new_token: Bucket
+    ) -> Result<(), RuntimeError> {
+        self.token_migration = Some(
+            TokenMigration::instantiate_without_supply_validation(
+                old_address,
+                new_token,
+                self.package_address,
+                &mut self.env
+            )?
+        );
+
+        Ok(())
+    }
+
     pub fn instantiate_default(&mut self) -> Result<(), RuntimeError> {
         let new_token = self.y_token.take(dec!(1000), &mut self.env)?;
         self.instantiate(self.x_address, new_token)?;

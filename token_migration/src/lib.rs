@@ -4,12 +4,14 @@ use scrypto::prelude::*;
 mod token_migration {
     struct TokenMigration {
         old_token: Vault,
-        new_token: Vault
+        new_token: Vault,
     }
 
     impl TokenMigration {
-        pub fn instantiate(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration> {
-            assert_ne!(old_address, new_token.resource_address(), "Old and new token addresses are not allowed to be equal.");
+        pub fn instantiate(
+            old_address: ResourceAddress,
+            new_token: Bucket
+        ) -> Global<TokenMigration> {
             if let Some(old_total_supply) = ResourceManager::from_address(old_address).total_supply() {
                 assert_eq!(
                     old_total_supply,
@@ -17,9 +19,21 @@ mod token_migration {
                     "New token amount needs to be equal to the total supply of the old token."
                 );
             }
+            Self::instantiate_without_supply_validation(old_address, new_token)
+        }
+
+        pub fn instantiate_without_supply_validation(
+            old_address: ResourceAddress,
+            new_token: Bucket
+        ) -> Global<TokenMigration> {
+            assert_ne!(
+                old_address,
+                new_token.resource_address(),
+                "Old and new token addresses are not allowed to be equal."
+            );
             (Self {
                 old_token: Vault::new(old_address),
-                new_token: Vault::with_bucket(new_token)
+                new_token: Vault::with_bucket(new_token),
             })
                 .instantiate()
                 .prepare_to_globalize(OwnerRole::None)

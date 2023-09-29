@@ -8,7 +8,7 @@ mod token_migration {
     use helper::*;
 
     #[test]
-    fn test_instantiate() {
+    fn test_instantiate_new_amount_equal_old_supply() {
         let mut helper = MigrationHelper::new().unwrap();
         let new_token = helper.y_token.take(dec!(1000), &mut helper.env).unwrap();
         helper.instantiate(helper.x_address, new_token).unwrap();
@@ -28,6 +28,47 @@ mod token_migration {
         let mut helper = MigrationHelper::new().unwrap();
         let new_token = helper.y_token.take(dec!(1001), &mut helper.env).unwrap();
         helper.instantiate(helper.x_address, new_token).unwrap()
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_instantiate_same_token() {
+        let mut helper = MigrationHelper::new().unwrap();
+        let new_token = helper.x_token.take(dec!(1000), &mut helper.env).unwrap();
+        helper.instantiate(helper.x_address, new_token).unwrap();
+    }
+
+    #[test]
+    #[ignore = "Creating untracked fungible tokens is currently not exposed by scrypto_test."]
+    fn test_instantiate_untracked_old_supply() {}
+
+    #[test]
+    fn test_instantiate_without_supply_validation_new_amount_equal_old_supply() {
+        let mut helper = MigrationHelper::new().unwrap();
+        let new_token = helper.y_token.take(dec!(1000), &mut helper.env).unwrap();
+        helper.instantiate_without_supply_validation(helper.x_address, new_token).unwrap();
+    }
+
+    #[test]
+    fn test_instantiate_without_supply_validation_new_amount_lesser_old_supply() {
+        let mut helper = MigrationHelper::new().unwrap();
+        let new_token = helper.y_token.take(dec!(999), &mut helper.env).unwrap();
+        helper.instantiate_without_supply_validation(helper.x_address, new_token).unwrap();
+    }
+
+    #[test]
+    fn test_instantiate_without_supply_validation_new_amount_greater_old_supply() {
+        let mut helper = MigrationHelper::new().unwrap();
+        let new_token = helper.y_token.take(dec!(1001), &mut helper.env).unwrap();
+        helper.instantiate_without_supply_validation(helper.x_address, new_token).unwrap();
+    }
+
+    #[test]
+    #[should_panic]
+    fn test_instantiate_without_supply_validation_same_token() {
+        let mut helper = MigrationHelper::new().unwrap();
+        let new_token = helper.x_token.take(dec!(1000), &mut helper.env).unwrap();
+        helper.instantiate_without_supply_validation(helper.x_address, new_token).unwrap();
     }
 
     #[test]

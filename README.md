@@ -12,6 +12,15 @@ At instantiation the blueprint checks that the amount of `new_token` bucket prov
 
 If you have a mutable old token you should not mint or burn any of the old tokens after instantiating the `TokenMigration` blueprint. If you have minted more old tokens after instantiation you would need to create another new instance of the `TokenMigration` blueprint for the same addresses.
 
+### Instantiation without Total Supply Validation
+There are some valid use cases where you want to migrate to a new token with a smaller total supply. For example if you "burned" tokens of the old supply by sending them to a permanent lock "burn address".
+To support cases like these you can use the following instantiate method:
+```rust
+pub fn instantiate_without_supply_validation(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration>
+```
+Be very careful if you use it because it might lead to a situation where not everyone is able to migrate to the new token since there could be more old tokens in circulation than you have added new tokens.
+You would need to deploy another migration contract in this case.
+
 ## Token Migration
 To swap your old tokens to the new ones you can simply send a bucket of old tokens to the `swap` method on the instantiated `TokenMigration` component.
 
