@@ -31,7 +31,10 @@ Please reach out to us either via `info@ociswap.com` or on [Telegram](https://t.
 In some cases, there may be a need to migrate to a new token with a reduced total supply. For instance, when you have 'burned' tokens from the old supply by sending them to a permanent lock address
 To accommodate such scenarios, you can utilize the following 'instantiate' method:
 ```rust
-pub fn instantiate_without_supply_validation(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration>
+pub fn instantiate_without_supply_validation(
+    old_address: ResourceAddress,
+    new_token: Bucket
+) -> Global<TokenMigration>
 ```
 However, if you're uncertain about whether this method is suitable for your project, it's advisable to opt for the standard `instantiate` method. You'll realize the need for the former when it's necessary.
 
