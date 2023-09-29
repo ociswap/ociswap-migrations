@@ -12,6 +12,29 @@ At instantiation the blueprint checks that the amount of `new_token` bucket prov
 
 If you have a mutable old token you should not mint or burn any of the old tokens after instantiating the `TokenMigration` blueprint. If you have minted more old tokens after instantiation you would need to create another new instance of the `TokenMigration` blueprint for the same addresses.
 
+### Transaction Manifest
+Stokenet:
+```
+CALL_METHOD
+    Address("account_your_account_with_new_tokens)
+    "withdraw"
+    Address("resource_new_token")
+    Decimal("<total supply of new token>")
+;
+TAKE_FROM_WORKTOP
+    Address("resource_new_token")
+    Decimal("<total supply of new token>")
+    Bucket("new_token")
+;
+CALL_FUNCTION
+    Address("package_tdx_2_1pkgvv6v3kts7jze6prqlxmjd4cc2e76zjqskvnhhay67lkunq5qfrt")
+    "TokenMigration"
+    "instantiate"
+    Address("resource_old_address")
+    Bucket("new_token")
+;
+```
+
 ## Token Migration
 To swap your old tokens to the new ones you can simply send a bucket of old tokens to the `swap` method on the instantiated `TokenMigration` component.
 
@@ -20,6 +43,26 @@ pub fn swap(old_token: Bucket) -> Bucket
 ```
 
 You get the new tokens returned then which you need to deposit in your user's wallet in the transaction manifest.
+
+### Transaction Manifest
+```
+CALL_METHOD
+    Address("account_your_account_with_old_tokens")
+    "withdraw"
+    Address("resource_old_token")
+    Decimal("5")
+;
+TAKE_FROM_WORKTOP
+    Address("resource_old_token")
+    Decimal("5")
+    Bucket("old_token")
+;
+CALL_METHOD
+    Address("component_address_of_the_migration_component")
+    "swap"
+    Bucket("old_token")
+;
+```
 
 ## Ociswap Integration
 
