@@ -16,7 +16,7 @@ If you have a mutable old token you should not mint or burn any of the old token
 Stokenet:
 ```
 CALL_METHOD
-    Address("account_your_account_with_new_tokens)
+    Address("account_your_account_with_new_tokens")
     "withdraw"
     Address("resource_new_token")
     Decimal("<total supply of new token>")
@@ -61,6 +61,11 @@ CALL_METHOD
     Address("component_address_of_the_migration_component")
     "swap"
     Bucket("old_token")
+;
+CALL_METHOD
+    Address("account_your_account_address")
+    "deposit_batch"
+    Expression("ENTIRE_WORKTOP")
 ;
 ```
 
