@@ -12,15 +12,6 @@ At instantiation the blueprint checks that the amount of `new_token` bucket prov
 
 If you have a mutable old token you should not mint or burn any of the old tokens after instantiating the `TokenMigration` blueprint. If you have minted more old tokens after instantiation you would need to create another new instance of the `TokenMigration` blueprint for the same addresses.
 
-### Instantiation without Total Supply Validation
-There are some valid use cases where you want to migrate to a new token with a smaller total supply. For example if you "burned" tokens of the old supply by sending them to a permanent lock "burn address".
-To support cases like these you can use the following instantiate method:
-```rust
-pub fn instantiate_without_supply_validation(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration>
-```
-Be very careful if you use it because it might lead to a situation where not everyone is able to migrate to the new token since there could be more old tokens in circulation than you have added new tokens.
-You would need to deploy another migration contract in this case.
-
 ## Token Migration
 To swap your old tokens to the new ones you can simply send a bucket of old tokens to the `swap` method on the instantiated `TokenMigration` component.
 
@@ -29,6 +20,16 @@ pub fn swap(old_token: Bucket) -> Bucket
 ```
 
 You get the new tokens returned then which you need to deposit in your user's wallet in the transaction manifest.
+
+## Disable Total Supply Validation
+In some cases, there may be a need to migrate to a new token with a reduced total supply. For instance, when you have 'burned' tokens from the old supply by sending them to a permanent lock address
+To accommodate such scenarios, you can utilize the following 'instantiate' method:
+```rust
+pub fn instantiate_without_supply_validation(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration>
+```
+However, if you're uncertain about whether this method is suitable for your project, it's advisable to opt for the standard `instantiate` method. You'll realize the need for the former when it's necessary.
+
+Exercise caution when using this method, as it could potentially result in a situation where not everyone can migrate to the new token due to a higher number of old tokens still in circulation compared to the new tokens you've introduced. In such cases, deploying another migration contract may be required."
 
 ## Ociswap Integration
 
