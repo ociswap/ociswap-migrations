@@ -22,7 +22,7 @@ Manifests can be submitted through the following platforms:
 - [Stokenet Developer Console](https://stokenet-console.radixdlt.com)
 - [Mainnet Developer Console](https://console.radixdlt.com)
 
-We recommend testing on Stokenet first to ensure that the wallet displays the information correctly before deploying to Mainnet. Once satisfied, you can proceed to instantiate the migration component using the following manifest:
+We recommend testing on Stokenet first to ensure that the wallet displays the information correctly before deploying to Mainnet. Once satisfied, you can proceed to instantiate the migration component.
 
 ## Instantiation
 Now call the `instantiate` function on the blueprint passing the `old_address` (Babylon address of your old token - every Olympia token will have a new address on Bablyon) and `new_token` (full new total supply):
@@ -35,7 +35,10 @@ At instantiation the blueprint checks that the amount of `new_token` bucket prov
 If you have a mutable old token you should not mint or burn any of the old tokens after instantiating the `TokenMigration` blueprint. If you have minted more old tokens after instantiation you would need to create another new instance of the `TokenMigration` blueprint for the same addresses.
 
 ### Transaction Manifest
-Stokenet:
+Package address of blueprint:
+- Stokenet: `package_tdx_2_1pkgvv6v3kts7jze6prqlxmjd4cc2e76zjqskvnhhay67lkunq5qfrt`
+
+
 ```
 CALL_METHOD
     Address("account_your_account_with_new_tokens")
@@ -49,7 +52,7 @@ TAKE_FROM_WORKTOP
     Bucket("new_token")
 ;
 CALL_FUNCTION
-    Address("package_tdx_2_1pkgvv6v3kts7jze6prqlxmjd4cc2e76zjqskvnhhay67lkunq5qfrt")
+    Address("<package_address>")
     "TokenMigration"
     "instantiate"
     Address("resource_old_address")
