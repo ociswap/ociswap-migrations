@@ -44,6 +44,27 @@ pub fn swap(old_token: Bucket) -> Bucket
 
 You get the new tokens returned then which you need to deposit in your user's wallet in the transaction manifest.
 
+### Create Your New Token
+Any fungible token can be used with the migration contract. To demonstrate how this can be achieved through the transaction manifest, we've provided two example manifests:
+
+- [Create Owner Badge](token_migration/manifests/create_owner_badge.rtm)
+- [Create Token](token_migration/manifests/create_owner_badge.rtm)
+
+You only need to customize the values indicated by `<dummy value>`.
+
+Start by creating an owner badge, and then create your token with the owner badge assigned to it.
+The owner of the owner badge has the authority to modify metadata. Currently, the `name` and `symbol` fields are locked and cannot be altered by the owner.
+However, other fields, such as `description` or `info_url` can be updated.
+You have the option to change this behavior by setting the `locked` boolean flag to `true` but it's generally considered a fair trade-off.
+
+By default, `track_total_supply` is set to `false` (second parameter), optimizing scalability for sharded Xian. If you don't anticipate frequent querying or modification of the `total_supply` in Scrypto, you can set it to `true`. Note that when set to `false`, reading the total supply in Scrypto is not possible, although it can still be achieved via the off-ledger gateway.
+
+Manifests can be submitted through the following platforms:
+- [Stokenet Developer Console](https://stokenet-console.radixdlt.com)
+- [Mainnet Developer Console](https://console.radixdlt.com)
+
+We recommend testing on Stokenet first to ensure that the wallet displays the information correctly before deploying to Mainnet. Once satisfied, you can proceed to instantiate the migration component using the following manifest:
+
 ### Transaction Manifest
 ```
 CALL_METHOD

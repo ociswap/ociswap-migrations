@@ -1,0 +1,33 @@
+CREATE_FUNGIBLE_RESOURCE_WITH_INITIAL_SUPPLY
+    Enum<OwnerRole::None>()
+    false
+    1u8
+    Decimal("1")
+    Tuple(
+        Enum<0u8>(),
+        Enum<0u8>(),
+        Enum<0u8>(),
+        Enum<0u8>(),
+        Enum<0u8>(),
+        Enum<0u8>()
+    )
+    Tuple(
+        Map<String, Tuple>(
+            "name" => Tuple(
+                Enum<1u8>(
+                    Enum<0u8>(
+                        "<owner badge name e.g. OCI Owner badge>"
+                    )
+                ),
+                true
+            )
+        ),
+        Map<String, Enum>()
+    )
+    Enum<0u8>()
+;
+CALL_METHOD
+    Address("<account_your_account_address>")
+    "deposit_batch"
+    Expression("ENTIRE_WORKTOP")
+;

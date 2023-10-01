@@ -1,0 +1,86 @@
+CREATE_FUNGIBLE_RESOURCE_WITH_INITIAL_SUPPLY
+    Enum<OwnerRole::Updatable>(
+        Enum<AccessRule::Protected>(
+            Enum<AccessRuleNode::ProofRule>(
+                Enum<ProofRule::Require>(
+                    Enum<ResourceOrNonFungible::Resource>(
+                        Address("address of your owner badge")
+                    )
+                )
+            )
+        )
+    )
+    false
+    18u8
+    Decimal("<your supply>")
+    Tuple(
+        Enum<0u8>(),
+        Enum<0u8>(),
+        Enum<0u8>(),
+        Enum<0u8>(),
+        Enum<0u8>(),
+        Enum<0u8>()
+    )
+    Tuple(
+        Map<String, Tuple>(
+            "name" => Tuple(
+                Enum<1u8>(
+                    Enum<0u8>(
+                        "<name>"
+                    )
+                ),
+                true
+            ),
+            "symbol" => Tuple(
+                Enum<1u8>(
+                    Enum<0u8>(
+                        "<symbol uppercase>"
+                    )
+                ),
+                true
+            ),
+            "description" => Tuple(
+                Enum<1u8>(
+                    Enum<0u8>(
+                        "<description>"
+                    )
+                ),
+                false
+            ),
+            "tags" => Tuple(
+                Enum<1u8>(
+                    Enum<128u8>(
+                        Array<String>(
+                            "tag1",
+                            "tag2"
+                        )
+                    )
+                ),
+                false
+            ),
+            "icon_url" => Tuple(
+                Enum<1u8>(
+                    Enum<13u8>(
+                        "<icon_url>"
+                    )
+                ),
+                false
+            ),
+            "info_url" => Tuple(
+                Enum<1u8>(
+                    Enum<13u8>(
+                        "<info_url>"
+                    )
+                ),
+                false
+            )
+        ),
+        Map<String, Enum>()
+    )
+    Enum<0u8>()
+;
+CALL_METHOD
+    Address("<account your account name>")
+    "deposit_batch"
+    Expression("ENTIRE_WORKTOP")
+;
