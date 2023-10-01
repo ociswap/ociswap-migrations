@@ -48,7 +48,7 @@ You get the new tokens returned then which you need to deposit in your user's wa
 Any fungible token can be used with the migration contract. To demonstrate how this can be achieved through the transaction manifest, we've provided two example manifests:
 
 - [Create Owner Badge](token_migration/manifests/create_owner_badge.rtm)
-- [Create Token](token_migration/manifests/create_owner_badge.rtm)
+- [Create Token](token_migration/manifests/create_token.rtm)
 
 You only need to customize the values indicated by `<dummy value>`.
 
