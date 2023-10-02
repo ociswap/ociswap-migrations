@@ -258,8 +258,14 @@ checksum = "9ea835d29036a4087793836fa931b08837ad5e957da9e23886b29586fb9b6650"
 name = "dummy_account"
 version = "1.0.0"
 dependencies = [
+ "dummy_account",
+ "radix-engine",
+ "radix-engine-interface",
  "sbor",
  "scrypto",
+ "scrypto-test",
+ "scrypto-unit",
+ "transaction",
 ]
 
 [[package]]

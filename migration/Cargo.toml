@@ -14,7 +14,7 @@ radix-engine = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "v1
 scrypto-unit = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "v1.0.0" }
 scrypto-test = { git = "https://github.com/radixdlt/radixdlt-scrypto", tag = "v1.0.0" }
 token_migration = { path = ".", features = ["test"] }
-dummy_account = { path = "../dummy_account", features = ["test"] }
+dummy_account = { path = "./dummy_account", features = ["test"] }
 pretty_assertions = "1.4.0"
 
 [profile.release]

@@ -24,7 +24,7 @@ impl MigrationHelper {
         let package_address = Package::compile_and_publish(this_package!(), &mut env)?;
         
         let dummy_account_package_address = Package::compile_and_publish(
-            "../dummy_account",
+            "./dummy_account",
             &mut env
         )?;
         let account = DummyAccount::instantiate(dummy_account_package_address, &mut env)?;
