@@ -9,7 +9,10 @@ Any fungible token can be used with the migration contract. To demonstrate how t
 - [Create Owner Badge](manifests/create_owner_badge.rtm)
 - [Create Token](manifests/create_token.rtm)
 
-You only need to customize the values indicated by `<dummy value>`.
+You only need to customize the values indicated by `<dummy value>`:
+```
+"<name>" -> "Megatoken"
+```
 
 Start by creating an owner badge, and then create your token with the owner badge assigned to it.
 The owner of the owner badge has the authority to modify metadata. Currently, the `name` and `symbol` fields are locked and cannot be altered by the owner.
