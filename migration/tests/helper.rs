@@ -1,10 +1,12 @@
 use pretty_assertions::assert_eq;
 use token_migration::test_bindings::*;
+use dummy_account::test_bindings::*;
 use scrypto::*;
 use scrypto_test::prelude::*;
 
 pub struct MigrationHelper {
     pub env: TestEnvironment,
+    pub dapp_definition: ComponentAddress,
     pub package_address: PackageAddress,
     pub x_token: Bucket,
     pub y_token: Bucket,
@@ -18,7 +20,15 @@ pub struct MigrationHelper {
 impl MigrationHelper {
     pub fn new() -> Result<Self, RuntimeError> {
         let mut env = TestEnvironment::new();
+
         let package_address = Package::compile_and_publish(this_package!(), &mut env)?;
+        
+        let dummy_account_package_address = Package::compile_and_publish(
+            "../dummy_account",
+            &mut env
+        )?;
+        let account = DummyAccount::instantiate(dummy_account_package_address, &mut env)?;
+        let dapp_definition = account.address(&mut env)?;
 
         let x_token = ResourceBuilder::new_fungible(OwnerRole::None)
             .divisibility(18)
@@ -36,6 +46,7 @@ impl MigrationHelper {
 
         Ok(Self {
             env,
+            dapp_definition,
             package_address,
             x_token,
             y_token,
@@ -56,6 +67,7 @@ impl MigrationHelper {
             TokenMigration::instantiate(
                 old_address,
                 new_token,
+                self.dapp_definition,
                 self.package_address,
                 &mut self.env
             )?
@@ -73,6 +85,7 @@ impl MigrationHelper {
             TokenMigration::instantiate_without_supply_validation(
                 old_address,
                 new_token,
+                self.dapp_definition,
                 self.package_address,
                 &mut self.env
             )?

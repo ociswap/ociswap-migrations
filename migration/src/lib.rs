@@ -10,7 +10,8 @@ mod token_migration {
     impl TokenMigration {
         pub fn instantiate(
             old_address: ResourceAddress,
-            new_token: Bucket
+            new_token: Bucket,
+            dapp_definition: ComponentAddress
         ) -> Global<TokenMigration> {
             if let Some(old_total_supply) = ResourceManager::from_address(old_address).total_supply() {
                 assert_eq!(
@@ -19,12 +20,13 @@ mod token_migration {
                     "New token amount needs to be equal to the total supply of the old token."
                 );
             }
-            Self::instantiate_without_supply_validation(old_address, new_token)
+            Self::instantiate_without_supply_validation(old_address, new_token, dapp_definition)
         }
 
         pub fn instantiate_without_supply_validation(
             old_address: ResourceAddress,
-            new_token: Bucket
+            new_token: Bucket,
+            dapp_definition: ComponentAddress
         ) -> Global<TokenMigration> {
             assert_ne!(
                 old_address,
@@ -37,6 +39,13 @@ mod token_migration {
             })
                 .instantiate()
                 .prepare_to_globalize(OwnerRole::None)
+                .metadata(
+                    metadata! {
+                        init {
+                            "dapp_definition" => dapp_definition, locked;
+                        }
+                    }
+                )
                 .globalize()
         }
 

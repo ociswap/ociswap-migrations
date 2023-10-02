@@ -223,12 +223,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "diff"
-version = "0.1.13"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "56254986775e3233ffa9c4d7d3faaf6d36a2c09d30b20687e9f88bc8bafc16c8"
-
-[[package]]
 name = "digest"
 version = "0.9.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -253,6 +247,20 @@ name = "downcast-rs"
 version = "1.2.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "9ea835d29036a4087793836fa931b08837ad5e957da9e23886b29586fb9b6650"
+
+[[package]]
+name = "dummy_account"
+version = "1.0.0"
+dependencies = [
+ "dummy_account",
+ "radix-engine",
+ "radix-engine-interface",
+ "sbor",
+ "scrypto",
+ "scrypto-test",
+ "scrypto-unit",
+ "transaction",
+]
 
 [[package]]
 name = "ed25519"
@@ -674,16 +682,6 @@ name = "ppv-lite86"
 version = "0.2.17"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "5b40af805b3121feab8a3c29f04d8ad262fa8e0561883e7653e024ae4479e6de"
-
-[[package]]
-name = "pretty_assertions"
-version = "1.4.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "af7cee1a6c8a5b9208b3cb1061f10c0cb689087b3d8ce85fb9d2dd7a29b6ba66"
-dependencies = [
- "diff",
- "yansi",
-]
 
 [[package]]
 name = "proc-macro-error"
@@ -1360,20 +1358,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "token_migration"
-version = "1.0.0"
-dependencies = [
- "pretty_assertions",
- "radix-engine",
- "sbor",
- "scrypto",
- "scrypto-test",
- "scrypto-unit",
- "token_migration",
- "transaction",
-]
-
-[[package]]
 name = "transaction"
 version = "1.0.0"
 source = "git+https://github.com/radixdlt/radixdlt-scrypto?tag=v1.0.0#6ab3fab9ca88788a6753649b553ea3b1b3a5e31f"
@@ -1675,12 +1659,6 @@ name = "windows_x86_64_msvc"
 version = "0.48.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "ed94fce61571a4006852b7389a063ab983c02eb1bb37b47f8272ce92d06d9538"
-
-[[package]]
-name = "yansi"
-version = "0.5.1"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "09041cd90cf85f7f8b2df60c646f853b7f535ce68f85244eb6731cf89fa498ec"
 
 [[package]]
 name = "zeroize"
