@@ -31,20 +31,20 @@ We recommend testing on Stokenet first to ensure that the wallet displays the in
 Now call the `instantiate` function on the blueprint passing the `old_address` (Babylon address of your old token - every Olympia token will have a new address on Bablyon) and `new_token` (full new total supply):
 
 ```rust
-pub fn instantiate(old_address: ResourceAddress, new_token: Bucket) -> Global<TokenMigration>
+pub fn instantiate(old_address: ResourceAddress, new_token: Bucket, dapp_definition: ComponentAddress) -> Global<TokenMigration>
 ```
 At instantiation the blueprint checks that the amount of `new_token` bucket provided is equal to the total supply of the old token for additional safety.
 
 If you have a mutable old token you should not mint or burn any of the old tokens after instantiating the `TokenMigration` blueprint. If you have minted more old tokens after instantiation you would need to create another new instance of the `TokenMigration` blueprint for the same addresses.
 
 ### Transaction Manifest
-Package address of blueprint:
-- Stokenet: `package_tdx_2_1pkgvv6v3kts7jze6prqlxmjd4cc2e76zjqskvnhhay67lkunq5qfrt`
-
+Package addresses of blueprint:
+- Stokenet: `package_tdx_2_1p5l6wyh8asnt0vsz9jqnxesqlq8q5zc4j9glkzztcuzl9p47qjskct`
+- Mainnet: `package_rdx1pk00z83lvksl3wzs5kk6vw3a2d08zzwpfyqllyjkrmv7nv57y2rca8`
 
 ```
 CALL_METHOD
-    Address("account_your_account_with_new_tokens")
+    Address("<account_your_account_with_new_tokens>")
     "withdraw"
     Address("resource_new_token")
     Decimal("<total supply of new token>")
@@ -58,8 +58,9 @@ CALL_FUNCTION
     Address("<package_address>")
     "TokenMigration"
     "instantiate"
-    Address("resource_old_address")
+    Address("<resource_old_address>")
     Bucket("new_token")
+    Address("<dapp_definition_address>")
 ;
 ```
 
@@ -109,7 +110,8 @@ To accommodate such scenarios, you can utilize the following 'instantiate' metho
 ```rust
 pub fn instantiate_without_supply_validation(
     old_address: ResourceAddress,
-    new_token: Bucket
+    new_token: Bucket,
+    dapp_definition: ComponentAddress
 ) -> Global<TokenMigration>
 ```
 However, if you're uncertain about whether this method is suitable for your project, it's advisable to opt for the standard `instantiate` method. You'll realize the need for the former when it's necessary.
