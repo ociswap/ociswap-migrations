@@ -115,3 +115,23 @@ pub fn instantiate_without_supply_validation(
 However, if you're uncertain about whether this method is suitable for your project, it's advisable to opt for the standard `instantiate` method. You'll realize the need for the former when it's necessary.
 
 Exercise caution when using this method, as it could potentially result in a situation where not everyone can migrate to the new token due to a higher number of old tokens still in circulation compared to the new tokens you've introduced. In such cases, deploying another migration contract may be required."
+
+## Verifiable Scrypto Build
+The deployed package has been constructed using the `scrypto-builder` to ensure the integrity and verifiability of the build process.
+
+You can recreate the build locally by running the following command:
+```sh
+DOCKER_DEFAULT_PLATFORM=linux/amd64 sudo docker run -v .:/src radixdlt/scrypto-builder:v1.0.0
+```
+
+To verify the integrity of the build, compare the `SHA256` hashes of the generated files with the following values:
+```sh
+sha256sum target/wasm32-unknown-unknown/release/token_migration.wasm
+sha256sum target/wasm32-unknown-unknown/release/token_migration.rpd
+```
+
+SHA256 Hashes of the Scrypto Build:
+- token_migration.wasm `1a93957d5fa07cd0eafacd3accb80f19cf8aeebbaac1228215c8afce630fc902`
+- token_migration.rpd `e129ac154371e03619db30d41c2cb8cbe9ae3fd55cc591b68d39238e3f81d512`
+
+These hashes serve as a cryptographic fingerprint to confirm the authenticity and integrity of the build artifacts.
