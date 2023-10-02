@@ -1,13 +1,13 @@
 # Token Migration
 
-This [TokenMigration](token_migration/src/lib.rs) blueprint aims to transition tokens from Olympia to Babylon, leveraging all the advanced resource capabilities of the Radix Babylon Engine (for further details refer to [Metadata Standard](https://docs-babylon.radixdlt.com/main/standards/metadata-standard-introduction.html)).
+This [TokenMigration](src/lib.rs) blueprint aims to transition tokens from Olympia to Babylon, leveraging all the advanced resource capabilities of the Radix Babylon Engine (for further details refer to [Metadata Standard](https://docs-babylon.radixdlt.com/main/standards/metadata-standard-introduction.html)).
 
 ## Create Your New Token
 To use the migration blueprint you need to create your own new token first (preferrable with the same total supply than your old token).
 Any fungible token can be used with the migration contract. To demonstrate how this can be achieved through the transaction manifest, we've provided two example manifests:
 
-- [Create Owner Badge](token_migration/manifests/create_owner_badge.rtm)
-- [Create Token](token_migration/manifests/create_token.rtm)
+- [Create Owner Badge](manifests/create_owner_badge.rtm)
+- [Create Token](manifests/create_token.rtm)
 
 You only need to customize the values indicated by `<dummy value>`.
 
