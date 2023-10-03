@@ -1,7 +1,7 @@
 CREATE_FUNGIBLE_RESOURCE_WITH_INITIAL_SUPPLY
     Enum<OwnerRole::None>()
     false
-    1u8
+    0u8
     Decimal("1")
     Tuple(
         Enum<0u8>(),
