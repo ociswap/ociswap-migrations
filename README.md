@@ -42,6 +42,10 @@ Package addresses of blueprint:
 - Stokenet: `package_tdx_2_1p5l6wyh8asnt0vsz9jqnxesqlq8q5zc4j9glkzztcuzl9p47qjskct`
 - Mainnet: `package_rdx1pk00z83lvksl3wzs5kk6vw3a2d08zzwpfyqllyjkrmv7nv57y2rca8`
 
+If you intend to utilize the Ociswap dapp definition for the migration component (please note that the token dapp definition should always remain your own), this choice enhances wallet compatibility.
+- Stokenet: `account_tdx_2_12yhfrtak5j0pmaju5l3p752wpye4z4nzua679ypns0094hmu66p2yk`
+- Mainnet: `account_rdx12x2ecj3kp4mhq9u34xrdh7njzyz0ewcz4szv0jw5jksxxssnjh7z6z`
+
 ```
 CALL_METHOD
     Address("<account_your_account_with_new_tokens>")
