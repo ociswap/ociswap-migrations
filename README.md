@@ -39,7 +39,7 @@ If you have a mutable old token you should not mint or burn any of the old token
 
 ### Transaction Manifest
 Package addresses of blueprint:
-- Stokenet: `package_tdx_2_1p5l6wyh8asnt0vsz9jqnxesqlq8q5zc4j9glkzztcuzl9p47qjskct`
+- Stokenet: `package_tdx_2_1pht43nrf52ptmw4ze57ngdkr9ps833l97t5ev6cclnekljzmzh2dev`
 - Mainnet: `package_rdx1pk00z83lvksl3wzs5kk6vw3a2d08zzwpfyqllyjkrmv7nv57y2rca8`
 
 If you intend to utilize the Ociswap dapp definition for the migration component (please note that the token dapp definition should always remain your own), this choice enhances wallet compatibility.
